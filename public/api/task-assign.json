@@ -47,41 +47,49 @@
     ],
     "selectableLabels": [
         {
+            "id": 1,
             "topic": "CLAIM",
             "description": "Express opinion",
             "important": false
         },
         {
+            "id": 2,
             "topic": "REACT",
             "description": "Response to something",
             "important": false
         },
         {
+            "id": 3,
             "topic": "QUESTION",
             "description": "Questioning the content",
             "important": false
         },
         {
+            "id": 4,
             "topic": "ADVICE",
             "description": "Provide helpful advice",
             "important": false
         },
         {
+            "id": 5,
             "topic": "REQUEST",
             "description": "Ask the other person to do something",
             "important": true
         },
         {
+            "id": 6,
             "topic": "SATISFACTION",
             "description": "Obtain satisfactory results",
             "important": true
         },
         {
+            "id": 7,
             "topic": "DISSATISFACTION",
             "description": "Get unssatisfactory results",
             "important": true
         },
         {
+            "id": 8,
             "topic": "SKIP",
             "description": "Hard to choose, no selection",
             "important": false

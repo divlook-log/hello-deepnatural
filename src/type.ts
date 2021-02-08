@@ -6,6 +6,7 @@ export interface Message {
 }
 
 export interface SelectableLabel {
+    id: number
     topic: string
     description: string
     important: boolean
