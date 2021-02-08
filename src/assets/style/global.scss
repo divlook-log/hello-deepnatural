@@ -1,10 +1,15 @@
 @import '@/assets/style/constant.scss';
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 
 html,
 body {
   margin: 0;
   padding: 0;
   height: 100%;
+}
+
+body {
+    font-family: 'Spoqa Han Sans Neo', sans-serif;
 }
 
 strong {
