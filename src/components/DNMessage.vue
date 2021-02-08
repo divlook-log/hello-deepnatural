@@ -83,6 +83,7 @@ export default class DNMessage extends Vue {
         border-radius: 4px;
         padding: 7px 16px;
         max-width: 160px;
+        cursor: pointer;
     }
 
     .Created {
