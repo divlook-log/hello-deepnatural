@@ -1,4 +1,4 @@
-export interface Messages {
+export interface Message {
     id: number
     isMyMsg: boolean
     body: string
@@ -14,5 +14,6 @@ export interface SelectableLabel {
 export interface TaskAssign {
     title: string
     body: string
+    messages: Message[]
     selectableLabels: SelectableLabel[]
 }

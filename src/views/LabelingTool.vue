@@ -57,7 +57,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import DNProgressBar from '@/components/DNProgressBar.vue'
 import DNMessage from '@/components/DNMessage.vue'
-import { Messages, TaskAssign } from '@/type'
+import { Message, TaskAssign } from '@/type'
 
 @Component({
     components: {
@@ -100,7 +100,7 @@ export default class LabelingTool extends Vue {
         }
     }
 
-    onClickMsg(msg: Messages) {
+    onClickMsg(msg: Message) {
         if (msg.isMyMsg) {
             this.state.selectedMsgId = msg.id
         }
