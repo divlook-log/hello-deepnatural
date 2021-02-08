@@ -27,7 +27,7 @@
                         <p>
                             I think AI will be smart soon :)<br />
                             <br />
-                            <DNProgressBar :completed="43" :total="51" />
+                            <DNProgressBar :completed="completedMyMsgCount" :total="myMsgCount" />
                         </p>
                     </div>
                 </div>
@@ -37,15 +37,15 @@
             <div class="PanelItem Panel-Center">
                 <div class="card">
                     <div class="card-body">
-                        <template v-for="msg in info.messages">
+                        <template v-for="(msg, index) in info.messages">
                             <DNMessage
-                                :key="msg.id"
+                                :key="index"
                                 :id="msg.id"
                                 :body="msg.body"
                                 :created-at="msg.createdAt"
                                 :my-msg="msg.isMyMsg"
-                                :selected="state.selectedMsgId === msg.id"
-                                @click="() => onClickMsg(msg)"
+                                :selected="state.selectedMsgIndex === index"
+                                @click="() => onClickMsg(msg, index)"
                             />
                         </template>
                     </div>
@@ -63,7 +63,8 @@
                     <DNTable
                         :head="['TOPIC', 'DESCRIPTION']"
                         :body="info.selectableLabels"
-                        @click="() => {}"
+                        :active-id="activeLabelId"
+                        @click="(label) => onClickLabel(label)"
                     />
                 </div>
             </div>
@@ -76,7 +77,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import DNProgressBar from '@/components/DNProgressBar.vue'
 import DNMessage from '@/components/DNMessage.vue'
 import DNTable from '@/components/DNTable.vue'
-import { Message, TaskAssign } from '@/type'
+import { Message, TaskAssign, SelectableLabel } from '@/type'
 
 @Component({
     components: {
@@ -95,7 +96,80 @@ export default class LabelingTool extends Vue {
     }
 
     state = {
-        selectedMsgId: 0,
+        selectedMsgIndex: -1,
+    }
+
+    get myMsgs() {
+        return this.info.messages.filter((row) => row.isMyMsg)
+    }
+
+    get myMsgCount() {
+        return this.myMsgs.length
+    }
+
+    get completedMyMsgs() {
+        return this.myMsgs.filter(row => row.labelId)
+    }
+
+    get completedMyMsgCount() {
+        return this.completedMyMsgs.length
+    }
+
+    get selectedMsg() {
+        const index = this.state.selectedMsgIndex
+
+        if (index === -1) {
+            return null
+        }
+
+        return this.info.messages[index]
+    }
+
+    get prevMyMsgIndex() {
+        const messages = this.info.messages
+
+        let index = this.state.selectedMsgIndex
+
+        if (index === -1) {
+            return -1
+        }
+
+        for (index--; index >= 0; index--) {
+            const msg = messages[index]
+
+            if (msg.isMyMsg) {
+                return index
+            }
+        }
+
+        return -1
+    }
+
+    get nextMyMsgIndex() {
+        const messages = this.info.messages
+        const len = messages.length
+
+        let index = this.state.selectedMsgIndex
+
+        if (index === -1) {
+            return -1
+        }
+
+        for (index++ ; index < len; index++) {
+            const msg = messages[index]
+
+            if (msg.isMyMsg) {
+                return index
+            }
+        }
+
+        return -1
+    }
+
+    get activeLabelId() {
+        const labelId = this.selectedMsg?.labelId ?? 0
+
+        return labelId
     }
 
     mounted() {
@@ -112,23 +186,42 @@ export default class LabelingTool extends Vue {
 
             const data: TaskAssign = await res.json()
 
+            data.messages = data.messages.map(msg => {
+                if (!msg.labelId) msg.labelId = 0
+                return msg
+            })
+
             this.info = data
         } catch (error) {
             console.error(error)
         }
     }
 
-    onClickMsg(msg: Message) {
+    onClickMsg(msg: Message, index: number) {
         if (!msg.isMyMsg) {
             return
         }
 
-        if (this.state.selectedMsgId === msg.id) {
-            this.state.selectedMsgId = 0
+        if (this.state.selectedMsgIndex === index) {
+            this.state.selectedMsgIndex = -1
             return
         }
 
-        this.state.selectedMsgId = msg.id
+        this.state.selectedMsgIndex = index
+    }
+
+    onClickLabel(label: SelectableLabel) {
+        if (!this.selectedMsg) {
+            return
+        }
+
+        const prevLabelId = this.selectedMsg.labelId
+
+        this.selectedMsg.labelId = label.id
+
+        if (prevLabelId === 0 && this.nextMyMsgIndex !== -1) {
+            this.state.selectedMsgIndex = this.nextMyMsgIndex
+        }
     }
 }
 </script>
