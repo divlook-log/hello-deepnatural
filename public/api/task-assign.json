@@ -44,5 +44,47 @@
             "body": "That's an understatement.",
             "createdAt": "오전 10:55:34"
         }
+    ],
+    "selectableLabels": [
+        {
+            "topic": "CLAIM",
+            "description": "Express opinion",
+            "important": false
+        },
+        {
+            "topic": "REACT",
+            "description": "Response to something",
+            "important": false
+        },
+        {
+            "topic": "QUESTION",
+            "description": "Questioning the content",
+            "important": false
+        },
+        {
+            "topic": "ADVICE",
+            "description": "Provide helpful advice",
+            "important": false
+        },
+        {
+            "topic": "REQUEST",
+            "description": "Ask the other person to do something",
+            "important": true
+        },
+        {
+            "topic": "SATISFACTION",
+            "description": "Obtain satisfactory results",
+            "important": true
+        },
+        {
+            "topic": "DISSATISFACTION",
+            "description": "Get unssatisfactory results",
+            "important": true
+        },
+        {
+            "topic": "SKIP",
+            "description": "Hard to choose, no selection",
+            "important": false
+        }
     ]
 }
