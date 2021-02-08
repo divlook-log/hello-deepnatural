@@ -45,6 +45,7 @@
             "createdAt": "오전 10:55:34"
         }
     ],
+    "labelDescription": "There are seven selectable themes. Read the message and choose the most appropriate topic!",
     "selectableLabels": [
         {
             "id": 1,

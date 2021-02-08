@@ -16,5 +16,6 @@ export interface TaskAssign {
     title: string
     body: string
     messages: Message[]
+    labelDescription: string
     selectableLabels: SelectableLabel[]
 }
