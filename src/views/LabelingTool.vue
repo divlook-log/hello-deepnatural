@@ -42,6 +42,8 @@
                                 :body="msg.body"
                                 :created-at="msg.createdAt"
                                 :my-msg="msg.isMyMsg"
+                                :selected="state.selectedMsgId === msg.id"
+                                @click="() => onClickMsg(msg)"
                             />
                         </template>
                     </div>
@@ -55,7 +57,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import DNProgressBar from '@/components/DNProgressBar.vue'
 import DNMessage from '@/components/DNMessage.vue'
-import { TaskAssign } from '@/type'
+import { Messages, TaskAssign } from '@/type'
 
 @Component({
     components: {
@@ -68,6 +70,10 @@ export default class LabelingTool extends Vue {
         title: '',
         body: '',
         messages: [],
+    }
+
+    state = {
+        selectedMsgId: 0,
     }
 
     // - 화면 좌측 패널의 작업 가이드 내용 (제목과 본문)
@@ -91,6 +97,12 @@ export default class LabelingTool extends Vue {
             this.info = data
         } catch (error) {
             console.error(error)
+        }
+    }
+
+    onClickMsg(msg: Messages) {
+        if (msg.isMyMsg) {
+            this.state.selectedMsgId = msg.id
         }
     }
 }
@@ -121,6 +133,10 @@ export default class LabelingTool extends Vue {
 
             &.Panel-Center {
                 min-width: 630px;
+
+                .card-body {
+                    padding: 10px 0;
+                }
             }
         }
     }

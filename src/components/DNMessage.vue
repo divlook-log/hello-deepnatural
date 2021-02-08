@@ -4,6 +4,7 @@
         :class="{
             'DNMessage-MyMsg': myMsg,
             'DNMessage-Active': active,
+            'DNMessage-Selected': selected,
         }"
     >
         <template v-if="!myMsg">
@@ -36,6 +37,12 @@ export default class DNMessage extends Vue {
     readonly active!: boolean
 
     @Prop({
+        type: Boolean,
+        default: false,
+    })
+    readonly selected!: boolean
+
+    @Prop({
         default: '',
     })
     readonly body!: string
@@ -56,7 +63,7 @@ export default class DNMessage extends Vue {
 
 .DNMessage {
     display: flex;
-    padding: 6px 0;
+    padding: 6px 16px;
 
     .Avatar {
         width: 38px;
@@ -96,6 +103,10 @@ export default class DNMessage extends Vue {
             background-color: $color-pickled-bluewood;
             color: $color-aqua;
         }
+    }
+
+    &.DNMessage-Selected {
+        background-color: rgba($color: #fff, $alpha: 0.04);
     }
 }
 </style>
