@@ -1,0 +1,105 @@
+{
+    "title": "2번째 작업입니다.",
+    "body": "AI can't talk without talking about context. Let's share the topics in each message so that you can talk smarter ~!\n\nClick on a topic in the list on the right for each message shown in the center of the screen :)",
+    "messages": [
+        {
+            "id": 1,
+            "isMyMsg": false,
+            "body": "How is your day going?",
+            "createdAt": "오전 11:45:57"
+        },
+        {
+            "id": 2,
+            "isMyMsg": true,
+            "body": "I'm not even half done yet.",
+            "createdAt": "오전 11:46:15"
+        },
+        {
+            "id": 3,
+            "isMyMsg": false,
+            "body": "What are you doing?",
+            "createdAt": "오전 11:44:49"
+        },
+        {
+            "id": 4,
+            "isMyMsg": true,
+            "body": "I have one more semester,\nbut it would be great to have a job lined up.",
+            "createdAt": "오전 11:45:56"
+        },
+        {
+            "id": 5,
+            "isMyMsg": true,
+            "body": "Hm……",
+            "createdAt": "오전 10:55:25"
+        },
+        {
+            "id": 6,
+            "isMyMsg": false,
+            "body": "You feel stressed out now.",
+            "createdAt": "오전 10:55:26"
+        },
+        {
+            "id": 7,
+            "isMyMsg": true,
+            "body": "That's an understatement.",
+            "createdAt": "오전 10:55:34"
+        },
+        {
+            "id": 8,
+            "isMyMsg": true,
+            "body": "That's an understatement. 2",
+            "createdAt": "오전 10:55:34"
+        }
+    ],
+    "labelDescription": "There are seven selectable themes. Read the message and choose the most appropriate topic!",
+    "selectableLabels": [
+        {
+            "id": 1,
+            "topic": "CLAIM",
+            "description": "Express opinion",
+            "important": false
+        },
+        {
+            "id": 2,
+            "topic": "REACT",
+            "description": "Response to something",
+            "important": false
+        },
+        {
+            "id": 3,
+            "topic": "QUESTION",
+            "description": "Questioning the content",
+            "important": false
+        },
+        {
+            "id": 4,
+            "topic": "ADVICE",
+            "description": "Provide helpful advice",
+            "important": false
+        },
+        {
+            "id": 5,
+            "topic": "REQUEST",
+            "description": "Ask the other person to do something",
+            "important": true
+        },
+        {
+            "id": 6,
+            "topic": "SATISFACTION",
+            "description": "Obtain satisfactory results",
+            "important": true
+        },
+        {
+            "id": 7,
+            "topic": "DISSATISFACTION",
+            "description": "Get unssatisfactory results",
+            "important": true
+        },
+        {
+            "id": 8,
+            "topic": "SKIP",
+            "description": "Hard to choose, no selection",
+            "important": false
+        }
+    ]
+}
