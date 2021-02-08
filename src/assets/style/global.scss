@@ -24,14 +24,23 @@ strong {
         font-weight: 500;
         margin: 0;
     }
+
     sub {
         font-size: 11px;
         line-height: 20px;
         color: $color-regent-gray;
     }
 
-    > .card-header,
-    > .card-body {
+    p {
+        font-size: 13px;
+        line-height: 20px;
+        color: $color-regent-gray;
+        margin: 0;
+    }
+
+    > div {
+        background-color: $color-ebony-clay;
+
         &:first-child {
             border-top-left-radius: 4px;
             border-top-right-radius: 4px;
@@ -48,11 +57,7 @@ strong {
     }
 
     .card-body {
-        background-color: $color-ebony-clay;
         padding: 16px 20px;
-        font-size: 13px;
-        line-height: 20px;
-        color: $color-regent-gray;
         white-space: pre-line;
     }
 }
