@@ -1,5 +1,17 @@
 # [DeepNatural] 프론트엔드 코딩 테스트
 
+## 실행
+
+```bash
+# 설치
+yarn install
+
+# devServer 실행
+yarn dev
+
+# http://localhost:8080
+```
+
 ## 문제
 
 1. 레이블링 도구가 웹브라우저에 띄워지면, 도구는 서버로부터 작업 데이터를 받아옵니다. (taskAssign API)
