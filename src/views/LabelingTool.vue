@@ -15,7 +15,7 @@
                     </div>
 
                     <div class="card-body">
-                        {{ info.body }}
+                        <p>{{ info.body }}</p>
                     </div>
                 </div>
 
@@ -24,9 +24,11 @@
                         <h3>
                             <strong>Good Job!</strong>
                         </h3>
-                        I think AI will be smart soon :)<br />
-                        <br />
-                        <DNProgressBar :completed="43" :total="51" />
+                        <p>
+                            I think AI will be smart soon :)<br />
+                            <br />
+                            <DNProgressBar :completed="43" :total="51" />
+                        </p>
                     </div>
                 </div>
             </div>
@@ -49,6 +51,22 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Right -->
+            <div class="PanelItem Panel-Right">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>SELECTABLE LABELS</h3>
+                        <p>{{ info.labelDescription }}</p>
+                    </div>
+
+                    <DNTable
+                        :head="['TOPIC', 'DESCRIPTION']"
+                        :body="info.selectableLabels"
+                        @click="() => {}"
+                    />
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -57,12 +75,14 @@
 import { Component, Vue } from 'vue-property-decorator'
 import DNProgressBar from '@/components/DNProgressBar.vue'
 import DNMessage from '@/components/DNMessage.vue'
+import DNTable from '@/components/DNTable.vue'
 import { Message, TaskAssign } from '@/type'
 
 @Component({
     components: {
         DNProgressBar,
         DNMessage,
+        DNTable,
     },
 })
 export default class LabelingTool extends Vue {
@@ -70,15 +90,13 @@ export default class LabelingTool extends Vue {
         title: '',
         body: '',
         messages: [],
+        labelDescription: '',
+        selectableLabels: [],
     }
 
     state = {
         selectedMsgId: 0,
     }
-
-    // - 화면 좌측 패널의 작업 가이드 내용 (제목과 본문)
-    // - 화면 중앙의 대화 내용
-    // - 화면 우측 패널의 내용 (패널의 제목, 설명, 그리고 레이블 내용)
 
     mounted() {
         this.getTaskAssignApi()
@@ -101,9 +119,16 @@ export default class LabelingTool extends Vue {
     }
 
     onClickMsg(msg: Message) {
-        if (msg.isMyMsg) {
-            this.state.selectedMsgId = msg.id
+        if (!msg.isMyMsg) {
+            return
         }
+
+        if (this.state.selectedMsgId === msg.id) {
+            this.state.selectedMsgId = 0
+            return
+        }
+
+        this.state.selectedMsgId = msg.id
     }
 }
 </script>
@@ -114,8 +139,10 @@ export default class LabelingTool extends Vue {
 .LabelingTool {
     background-color: $color-steel-gray;
     height: 100%;
+    display: flex;
 
     .Panels {
+        flex: 1;
         padding: 10px;
         display: flex;
         flex-flow: wrap;
@@ -128,15 +155,51 @@ export default class LabelingTool extends Vue {
             }
 
             &.Panel-Left {
-                max-width: 340px;
+                width: 340px;
             }
 
             &.Panel-Center {
-                min-width: 630px;
+                min-width: 300px;
+                flex: 1;
 
                 .card-body {
                     padding: 10px 0;
                 }
+            }
+
+            &.Panel-Right {
+                width: 430px;
+                height: 100%;
+
+                .card {
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
+
+                    > div:last-child {
+                        flex: 1;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1200px) {
+    .LabelingTool {
+        .Panels {
+            .PanelItem.Panel-Right {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .LabelingTool {
+        .Panels {
+            .PanelItem.Panel-Left {
+                width: 100%;
             }
         }
     }
