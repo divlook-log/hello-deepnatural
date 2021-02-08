@@ -1,0 +1,48 @@
+{
+    "title": "Tell us what the topic is about",
+    "body": "AI can't talk without talking about context. Let's share the topics in each message so that you can talk smarter ~!\n\nClick on a topic in the list on the right for each message shown in the center of the screen :)",
+    "messages": [
+        {
+            "id": 1,
+            "isMyMsg": false,
+            "body": "What are you doing?",
+            "createdAt": "오전 11:44:49"
+        },
+        {
+            "id": 2,
+            "isMyMsg": true,
+            "body": "I have one more semester,\nbut it would be great to have a job lined up.",
+            "createdAt": "오전 11:45:56"
+        },
+        {
+            "id": 3,
+            "isMyMsg": false,
+            "body": "How is your day going?",
+            "createdAt": "오전 11:45:57"
+        },
+        {
+            "id": 4,
+            "isMyMsg": true,
+            "body": "I'm not even half done yet.",
+            "createdAt": "오전 11:46:15"
+        },
+        {
+            "id": 5,
+            "isMyMsg": true,
+            "body": "Hm……",
+            "createdAt": "오전 10:55:25"
+        },
+        {
+            "id": 6,
+            "isMyMsg": false,
+            "body": "You feel stressed out now.",
+            "createdAt": "오전 10:55:26"
+        },
+        {
+            "id": 7,
+            "isMyMsg": true,
+            "body": "That's an understatement.",
+            "createdAt": "오전 10:55:34"
+        }
+    ]
+}
