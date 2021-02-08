@@ -13,7 +13,7 @@
                     alt="coin"
                     width="24px"
                 />
-                <span>21,000</span>
+                <span>{{ $numberFormat(myCoin) }}</span>
             </div>
 
             <div class="Avatar">
@@ -31,7 +31,11 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class DNHeader extends Vue {}
+export default class DNHeader extends Vue {
+    get myCoin() {
+        return this.$store.state.myCoin
+    }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -232,8 +232,7 @@ export default class LabelingTool extends Vue {
 
         console.log(`POST /task/result/${taskId}`, body)
 
-        // TODO: 1만점 증가
-
+        this.$store.commit('increaseMyCoin', 10000)
         this.state.selectedMsgIndex = -1
         this.getTaskAssignApi(this.state.taskId + 1)
     }
