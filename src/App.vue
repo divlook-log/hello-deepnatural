@@ -30,6 +30,7 @@ export default class App extends Vue {}
 
     main {
         flex: 1;
+        overflow: hidden;
     }
 }
 </style>

@@ -69,6 +69,15 @@
                 </div>
             </div>
         </div>
+
+        <DNToolBar
+            :prev-disabled="prevMyMsgIndex === -1"
+            :next-disabled="nextMyMsgIndex === -1"
+            :submit-disabled="!isFinish"
+            @prev="movePrevMsg"
+            @next="moveNextMsg"
+            @submit="submit"
+        />
     </div>
 </template>
 
@@ -77,6 +86,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import DNProgressBar from '@/components/DNProgressBar.vue'
 import DNMessage from '@/components/DNMessage.vue'
 import DNTable from '@/components/DNTable.vue'
+import DNToolBar from '@/components/DNToolBar.vue'
 import { Message, TaskAssign, SelectableLabel } from '@/type'
 
 @Component({
@@ -84,6 +94,7 @@ import { Message, TaskAssign, SelectableLabel } from '@/type'
         DNProgressBar,
         DNMessage,
         DNTable,
+        DNToolBar,
     },
 })
 export default class LabelingTool extends Vue {
@@ -97,6 +108,7 @@ export default class LabelingTool extends Vue {
 
     state = {
         selectedMsgIndex: -1,
+        taskId: 1,
     }
 
     get myMsgs() {
@@ -151,10 +163,6 @@ export default class LabelingTool extends Vue {
 
         let index = this.state.selectedMsgIndex
 
-        if (index === -1) {
-            return -1
-        }
-
         for (index++ ; index < len; index++) {
             const msg = messages[index]
 
@@ -172,13 +180,26 @@ export default class LabelingTool extends Vue {
         return labelId
     }
 
+    get isFinish() {
+        if (!this.myMsgCount) return false
+        return this.completedMyMsgCount === this.myMsgCount
+    }
+
     mounted() {
         this.getTaskAssignApi()
     }
 
-    async getTaskAssignApi() {
+    async getTaskAssignApi(taskId = this.state.taskId) {
+        if (taskId > 2) {
+            taskId = 1
+        }
+
+        if (this.state.taskId !== taskId) {
+            this.state.taskId = taskId
+        }
+
         try {
-            const res = await fetch('/api/task-assign.json')
+            const res = await fetch(`/api/task/assign/${taskId}.json`)
 
             if (!res.ok) {
                 throw new Error('Network response was not ok.')
@@ -195,6 +216,26 @@ export default class LabelingTool extends Vue {
         } catch (error) {
             console.error(error)
         }
+    }
+
+    async sendTaskResultApi() {
+        const { taskId } = this.state
+
+        const body = this.myMsgs.map(msg => {
+            const { id, labelId } = msg
+
+            return {
+                msgId: id,
+                labelId,
+            }
+        })
+
+        console.log(`POST /task/result/${taskId}`, body)
+
+        // TODO: 1만점 증가
+
+        this.state.selectedMsgIndex = -1
+        this.getTaskAssignApi(this.state.taskId + 1)
     }
 
     onClickMsg(msg: Message, index: number) {
@@ -219,9 +260,29 @@ export default class LabelingTool extends Vue {
 
         this.selectedMsg.labelId = label.id
 
-        if (prevLabelId === 0 && this.nextMyMsgIndex !== -1) {
+        if (prevLabelId === 0) {
+            this.moveNextMsg()
+        }
+    }
+
+    movePrevMsg() {
+        if (this.prevMyMsgIndex !== -1) {
+            this.state.selectedMsgIndex = this.prevMyMsgIndex
+        }
+    }
+
+    moveNextMsg() {
+        if (this.nextMyMsgIndex !== -1) {
             this.state.selectedMsgIndex = this.nextMyMsgIndex
         }
+    }
+
+    submit() {
+        if (!this.isFinish) {
+            return
+        }
+
+        this.sendTaskResultApi()
     }
 }
 </script>
@@ -239,6 +300,7 @@ export default class LabelingTool extends Vue {
         padding: 10px;
         display: flex;
         flex-flow: wrap;
+        margin-bottom: 64px;
 
         .PanelItem {
             margin-right: 10px;
@@ -254,15 +316,22 @@ export default class LabelingTool extends Vue {
             &.Panel-Center {
                 min-width: 300px;
                 flex: 1;
+                height: 100%;
 
-                .card-body {
-                    padding: 10px 0;
+                .card {
+                    max-height: 100%;
+                    overflow: auto;
+
+                    .card-body {
+                        padding: 10px 0;
+                    }
                 }
             }
 
             &.Panel-Right {
                 width: 430px;
                 height: 100%;
+                margin-right: 0;
 
                 .card {
                     display: flex;
