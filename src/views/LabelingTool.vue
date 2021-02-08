@@ -45,6 +45,7 @@
                                 :created-at="msg.createdAt"
                                 :my-msg="msg.isMyMsg"
                                 :selected="state.selectedMsgIndex === index"
+                                :active="!!msg.labelId"
                                 @click="() => onClickMsg(msg, index)"
                             />
                         </template>
