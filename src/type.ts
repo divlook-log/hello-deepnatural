@@ -3,6 +3,7 @@ export interface Message {
     isMyMsg: boolean
     body: string
     createdAt: string
+    labelId?: number
 }
 
 export interface SelectableLabel {
